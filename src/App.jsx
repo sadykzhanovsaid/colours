@@ -57,29 +57,28 @@ function App() {
     }, [])
 
     useEffect(() => {
-        let startY = 0;
-        let endY = 0;
+    let startY = 0;
 
-        function touchStart(e) {
-            startY = e.touches[0].clientY;
+    function touchStart(e) {
+        startY = e.touches[0].clientY;
+    }
+
+    function touchEnd(e) {
+        const endY = e.changedTouches[0].clientY;
+        const diff = startY - endY;
+        if (diff > 60) {
+            updateColors();
         }
+    }
 
-        function touchEnd(e) {
-            endY = e.changedTouches[0].clientY;
-            const diff = startY - endY;
-            if (diff > 60 || diff < -60) {
-                updateColors();
-            }
-        }
+    document.addEventListener("touchstart", touchStart);
+    document.addEventListener("touchend", touchEnd);
 
-        document.addEventListener("touchstart", touchStart);
-        document.addEventListener("touchend", touchEnd);
-
-        return () => {
-            document.removeEventListener("touchstart", touchStart);
-            document.removeEventListener("touchend", touchEnd);
-        };
-    }, []);
+    return () => {
+        document.removeEventListener("touchstart", touchStart);
+        document.removeEventListener("touchend", touchEnd);
+    };
+}, []);
 
     function toggleLock(index) {
         setColors(prev =>
