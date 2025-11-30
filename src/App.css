@@ -11,6 +11,11 @@
     user-select: none;
 }
 
+html, body, #root{
+    overscroll-behavior-y: contain;
+    overscroll-behavior: none;
+}
+
 body {
     overflow: hidden;
 }
